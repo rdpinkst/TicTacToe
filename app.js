@@ -1,17 +1,15 @@
-const gameBoard = (function() {
+const gameBoard = (function () {
     const board = ['x', 'o', 'x', 'o', 'x', 'o', 'x', 'o', 'x'];
 
-    function renderBoard(){
+    function renderBoard() {
         let boardGame = document.querySelectorAll('.boardSquare');
-
-        for(let square of boardGame){
-            let symbol = this.createElement('p');
-            symbol.innerText = board[this.dataIndex];
-            boardGame.appendChild(symbol);
+        for (let boards of boardGame) {
+            let p = document.createElement('p');
+            p.innerText = board[boards.dataset.index];
+            boards.appendChild(p);
         }
-        console.log(board);
     }
-    return{
-        renderBoard
+    return {
+        renderBoard,
     }
 })();
