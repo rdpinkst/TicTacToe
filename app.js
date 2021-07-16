@@ -24,31 +24,36 @@ const gameBoard = (function () {
             }
         }
     }
-    function checkWinner(player){
-        if(board[0] === board[1] && board[0] === board[2]){
-            
-        }
-    }
     function playerClick() {
         let count = 0;
         for (let boards of boardGame) {
             boards.addEventListener('click', (e) => {
                 let index = boards.dataset.index;
                 if (count % 2 === 0 && board[index] === '') {
-                    symbol = player1.symbol;
+                    board.splice(index, 1, player1.symbol);
                     count++;
                 }
                 else if (count % 2 === 1 && board[index] === '') {
-                    symbol = player2.symbol;
+                    board.splice(index, 1, player2.symbol);
                     count++;
                 }
-                board.splice(index, 1, symbol);
+                console.log(count);
                 console.log(board);
                 clearBoard();
                 renderBoard();
-                
+                checkWinner();
+
             })
         }
+    }
+    function checkWinner() {   
+        let count = {}; 
+          
+        for (let i = 0; i < 2; i++) {
+            count[board[i]] = (count[board[i]] || 0) + 1;
+        }
+        console.log(count);
+        
     }
     return {
         renderBoard,
