@@ -37,27 +37,59 @@ const gameBoard = (function () {
                     board.splice(index, 1, player2.symbol);
                     count++;
                 }
-                console.log(count);
-                console.log(board);
                 clearBoard();
                 renderBoard();
-                checkWinner();
 
             })
         }
     }
-    function checkWinner() {   
-        let count = {}; 
-          
-        for (let i = 0; i < 2; i++) {
-            count[board[i]] = (count[board[i]] || 0) + 1;
+    function checkWinner(index, count) {
+        let countRow = 0;
+        let countColumn = 0;
+        let countDiagonal = 0;
+
+
+
+        if (index % 2 === 0 && board[index] === 'x') {
+            countRow += 1;
+            countColumn += 1;
+            countDiagonal += 1;
         }
-        console.log(count);
-        
+        else if (index % 2 === 0 && board[index] === 'o') {
+            countRow--;
+            countColumn--;
+            countDiagonal--;
+        }
+        else if (index % 2 === 1 && board[index] === 'x') {
+            countRow++;
+            countColumn++;
+        }
+        else if (index % 2 === 1 && board[index] === 'o') {
+            countRow--;
+            countColumn--;
+        }
+
+
+        console.log(countColumn);
+        console.log(countRow);
+        console.log(countDiagonal);
+
+
+        if (countRow === 3 || countColumn === 3 || countDiagonal === 3) {
+            console.log('X is the winner');
+        }
+        else if (countRow === -3 || countColumn === -3 || countDiagonal === -3) {
+            console.log('O is the winner');
+        }
+        else if (count === 9) {
+            console.log(`It's a draw!`);
+        }
+
     }
     return {
         renderBoard,
         playerClick,
+        checkWinner,
 
     }
 })();
