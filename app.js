@@ -39,51 +39,41 @@ const gameBoard = (function () {
                 }
                 clearBoard();
                 renderBoard();
-
+                if(count > 4){
+                    checkWinner(count);
+                }
             })
         }
     }
-    function checkWinner(index, count) {
-        let countRow = 0;
-        let countColumn = 0;
-        let countDiagonal = 0;
-
-
-
-        if (index % 2 === 0 && board[index] === 'x') {
-            countRow += 1;
-            countColumn += 1;
-            countDiagonal += 1;
+    function checkWinner(count) {
+        if(board[0] === board[1] && board[1] === board[2]){
+            console.log(`${board[0]} wins!`);
         }
-        else if (index % 2 === 0 && board[index] === 'o') {
-            countRow--;
-            countColumn--;
-            countDiagonal--;
+        else if(board[3] === board[4] && board[4] === board[5]){
+            console.log(`${board[3]} wins!`);
         }
-        else if (index % 2 === 1 && board[index] === 'x') {
-            countRow++;
-            countColumn++;
+        else if(board[6] === board[7] && board[7] === board[8]){
+            console.log(`${board[6]} wins!`);
         }
-        else if (index % 2 === 1 && board[index] === 'o') {
-            countRow--;
-            countColumn--;
+        else if(board[0] === board[3] && board[3] === board[6]){
+            console.log(`${board[0]} wins!`);
         }
-
-
-        console.log(countColumn);
-        console.log(countRow);
-        console.log(countDiagonal);
-
-
-        if (countRow === 3 || countColumn === 3 || countDiagonal === 3) {
-            console.log('X is the winner');
+        else if(board[1] === board[4] && board[4] === board[7]){
+            console.log(`${board[1]} wins!`);
         }
-        else if (countRow === -3 || countColumn === -3 || countDiagonal === -3) {
-            console.log('O is the winner');
+        else if(board[2] === board[5] && board[5] === board[8]){
+            console.log(`${board[2]} wins!`);
         }
-        else if (count === 9) {
+        else if(board[0] === board[4] && board[4] === board[8]){
+            console.log(`${board[0]} wins!`);
+        }
+        else if(board[2] === board[4] && board[4] === board[6]){
+            console.log(`${board[2]} wins!`);
+        }
+        else if(count === 9){
             console.log(`It's a draw!`);
         }
+           
 
     }
     return {
