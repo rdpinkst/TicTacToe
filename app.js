@@ -1,23 +1,42 @@
 const player = function (name, symbol) {
-    return { name, symbol };
+    
+    return { name, symbol};
 }
 
 
 const gameBoard = (function () {
     const board = ['', '', '', '', '', '', '', '', ''];
+    const container = document.querySelector('#container');
     let boardGame = document.querySelectorAll('.boardSquare');
-    let winner = false;
     let count = 0;
+    let winner = '';
 
     const player1 = player('Player 1', 'x');
     const player2 = player('Player 2', 'o');
 
     function renderBoard() {
         for (let boards of boardGame) {
-            let p = document.createElement('p');
-            p.innerText = board[boards.dataset.index];
-            boards.appendChild(p);
+            let image = document.createElement('img');
+
+            if(board[boards.dataset.index] === 'x'){
+                image.src = 'close.png';
+            }
+            else if(board[boards.dataset.index] === 'o'){
+                image.src = 'o-symbol.png';
+            }
+        
+            boards.appendChild(image);
         }
+    }
+    function playerWins(winner){
+        let p = document.createElement('p');
+        p.setAttribute('id','winningPlayer');
+        p.innerText = `Congrats ${winner} wins!`;
+        container.appendChild(p);
+    }
+    function clearPlayerWins(){
+        let winPlayer = document.querySelector('#winningPlayer');
+        winPlayer.parentNode.removeChild(winPlayer);
     }
     function clearBoard() {
         for (let boards of boardGame) {
@@ -51,40 +70,50 @@ const gameBoard = (function () {
         
             if (board[0] === board[1] && board[1] === board[2] && board[0] !== '') {
                 console.log(`${board[0]} wins!`);
-                winner = true;
+                winner = board[0];
             }
             else if (board[3] === board[4] && board[4] === board[5] && board[3] !== '') {
                 console.log(`${board[3]} wins!`);
-                winner = true;
+                winner = board[3];
             }
             else if (board[6] === board[7] && board[7] === board[8] && board[6] !== '') {
                 console.log(`${board[6]} wins!`);
-                winner = true;
+                winner = board[6];
             }
             else if (board[0] === board[3] && board[3] === board[6] && board[0] !== '') {
                 console.log(`${board[0]} wins!`);
-                winner = true;
+                winner = board[0];
             }
             else if (board[1] === board[4] && board[4] === board[7] && board[1] !== '') {
                 console.log(`${board[1]} wins!`);
-                winner = true;
+                winner = board[1];
             }
             else if (board[2] === board[5] && board[5] === board[8] && board[2] !== '') {
                 console.log(`${board[2]} wins!`);
-                winner = true;
+                winner = board[2];
             }
             else if (board[0] === board[4] && board[4] === board[8] && board[0] !== '') {
                 console.log(`${board[0]} wins!`);
-                winner = true;
+                winner = board[0];
             }
             else if (board[2] === board[4] && board[4] === board[6] && board[2] !== '') {
                 console.log(`${board[2]} wins!`);
-                winner = true;
+                winner = board[2];
             }
             else if (count === 9) {
                 console.log(`It's a draw!`);
             }
-        
+            if(winner === player1.symbol){
+                winner = player1.name;
+                playerWins(winner);
+                console.log('Player 1 wins!');
+            }
+            else if(winner === player2.symbol){
+                winner = player2.name;
+                playerWins(winner);
+                console.log('Player 2 wins');
+            }
+                    
         restartGame();
     }
     function restartGame() {
@@ -92,17 +121,17 @@ const gameBoard = (function () {
 
         restart.addEventListener('click', function (e) {
             clearBoard();
+            //clearPlayerWins();
             for (let i = 0; i < board.length; i++) {
                 board[i] = '';
             }
             winner = false;
             count = 0;
-
         })
+        
     }
+    playerClick();
     return {
-        renderBoard,
-        playerClick,
         checkWinner,
         restartGame,
 
